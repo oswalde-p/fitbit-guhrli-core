@@ -1,8 +1,8 @@
-import { peerSocket } from 'messaging'
+// import { peerSocket } from 'messaging'
 import { DEFAULT_CONFIG } from './consts'
 
 class GuhrliApp {
-  constructor(config) {
+  constructor(peerSocket, config) {
     console.log('a')
     this.reading = '-',
     this.time = null,
