@@ -1,13 +1,14 @@
 import { peerSocket } from 'messaging'
-import { config } from '../../../guhrli.config.js'
+import { DEFAULT_CONFIG } from './consts'
 
 class GuhrliApp {
-  constructor() {
+  constructor(config) {
     this.reading = '-',
     this.time = null,
     this.isStale = false,
     this.alarm = null
     this.error = false
+    this.config = config || DEFUALT_CONFIG // todo: merge to allow partial config to be passed
 
     peerSocket.onmessage = evt => {
       // make sure it's one of our events first
@@ -20,8 +21,7 @@ class GuhrliApp {
   formattedAge() {
     if (!this.time) return
     const age = Math.round((new Date() - this.time) / (60 * 1000))
-    const staleAge = config.STALE_SGV_AGE || 5
-    if (age > staleAge) {
+    if (age > config.staleSgvMins) {
       if (age < 60 ) {
         return `${age}m`
       } else {
