@@ -1,7 +1,7 @@
 import { peerSocket } from 'messaging'
 import { config } from '../../../guhrli.config.js'
 
-class Guhrli {
+class GuhrliApp {
   constructor() {
     this.reading = '-',
     this.time = null,
@@ -47,4 +47,4 @@ class Guhrli {
   }
 }
 
-export { Guhrli }
+export { GuhrliApp }
