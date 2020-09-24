@@ -8,7 +8,7 @@ class GuhrliApp {
     this.isStale = false,
     this.alarm = null
     this.error = false
-    this.config = config || DEFUALT_CONFIG // todo: merge to allow partial config to be passed
+    this.config = config || DEFAULT_CONFIG // todo: merge to allow partial config to be passed
 
     peerSocket.onmessage = evt => {
       // make sure it's one of our events first
