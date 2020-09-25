@@ -1,53 +1,59 @@
-// import { peerSocket } from 'messaging'
-import { DEFAULT_CONFIG } from './consts'
+import { DEFAULT_CONFIG } from 'fitbit-guhrli-core/app/consts'
 
-class GuhrliApp {
-  constructor(peerSocket, config) {
-    console.log('a')
-    this.reading = '-',
-    this.time = null,
-    this.isStale = false,
-    this.alarm = null
-    this.error = false
-    this.config = config || DEFAULT_CONFIG // todo: merge to allow partial config to be passed
-    console.log('b')
+let reading = '-'
+let time = null
+let alarm = ''
+let hasError = false
+let config = DEFAULT_CONFIG
 
-    peerSocket.onmessage = evt => {
-      // make sure it's one of our events first
-      if (evt.data && evt.data.type == 'guhrli') {
-        this.processEvent(evt)
-      }
-    }
-  }
-
-  formattedAge() {
-    console.log('c')
-    if (!this.time) return
-    const age = Math.round((new Date() - this.time) / (60 * 1000))
-    if (age > config.staleSgvMins) {
-      if (age < 60 ) {
-        return `${age}m`
-      } else {
-        return `${Math.round(age / 60)}h`
-      }
-    } else {
-      return ''
-    }
-  }
-
-  processEvent(evt) {
-    const { data } = evt
-    if (data.error) {
-      this.error = true
-      return
-    }
-    this.error = false
-    if (data.reading) {
-      this.reading = data.reading
-      this.time = data.time
-      this.alarm = data.alarm
+const initialize = function(peerSocket, userConfig) {
+  if (userConfig) config = userConfig // todo: merge to allow partial config to be passed
+  peerSocket.onmessage = (evt) => {
+    // make sure it's one of our events first
+    if (evt.data && evt.data.type == 'guhrli') {
+      processEvent(evt.data)
     }
   }
 }
 
-export { GuhrliApp }
+const getFormattedAge = function() {
+  if (!time) return
+  const age = Math.round((new Date() - time) / (60 * 1000))
+  if (age > config.staleSgvMins) {
+    if (age < 60 ) {
+      return `${age}m`
+    } else {
+      return `${Math.round(age / 60)}h`
+    }
+  } else {
+    return ''
+  }
+}
+
+const processEvent = function(data) {
+  if (data.error) {
+    hasError = true
+    return
+  }
+  hasError = false
+  if (data.reading) {
+    reading = data.reading
+    time = new Date(data.time)
+    alarm = data.alarm
+  }
+}
+
+const getReading = function() {
+  return reading
+}
+
+const getAlarm = function() {
+  return alarm
+}
+
+export default {
+  initialize,
+  getAlarm,
+  getReading,
+  getFormattedAge
+}
