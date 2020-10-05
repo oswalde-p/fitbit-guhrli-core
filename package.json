@@ -11,5 +11,8 @@
     "guhrli"
   ],
   "author": "j.s.pursey@gmail.com",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "react": "^16.13.1"
+  }
 }
