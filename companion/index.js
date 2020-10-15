@@ -49,6 +49,7 @@ export class GuhrliCompanion {
   }
 
   updateSgvService(id) {
+    if (!id) throw new GuhrliError('No sgvServiceId set')
     switch (id) {
       case BG_SOURCES.TOMATO:
         return this.sgvService = new TomatoService()
