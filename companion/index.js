@@ -7,6 +7,7 @@ import { addSlash } from './utils'
 import { NightscoutService } from './services/nightscout'
 import { TomatoService } from './services/tomato'
 import { XdripService } from './services/xdrip'
+import { GuhrliError } from '../common/errors'
 
 export class GuhrliCompanion {
   constructor() {
@@ -116,6 +117,11 @@ function sendError(message) {
   }
 }
 
-export function initialize() {
+function initialize() {
   return new GuhrliCompanion()
+}
+
+export {
+  initialize,
+  GuhrliError
 }

@@ -1,5 +1,7 @@
 import { DEFAULT_CONFIG } from 'fitbit-guhrli-core/app/consts'
 
+import { GuhrliError } from '../common/errors'
+
 let reading = '-'
 let time = null
 let alarm = ''
@@ -55,5 +57,6 @@ export default {
   initialize,
   getAlarm,
   getReading,
-  getFormattedAge
+  getFormattedAge,
+  GuhrliError
 }
