@@ -119,6 +119,7 @@ function sendError(message) {
 }
 
 function initialize() {
+  // todo: add support for passing args
   return new GuhrliCompanion()
 }
 
