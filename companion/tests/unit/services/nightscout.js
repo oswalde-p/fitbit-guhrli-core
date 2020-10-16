@@ -9,7 +9,7 @@ const utilStub = {
 }
 
 
-const { getAlarms, NightscoutService } = proxyquire('../../services/nightscout', {
+const { getAlarms, NightscoutService } = proxyquire('../../../services/nightscout', {
   '../utils': utilStub
 })
 

@@ -1,7 +1,7 @@
 import test from 'ava'
 import * as sinon from 'sinon'
 import proxyquire from 'proxyquire'
-import { sgvReading } from '../../classes/sgvReading'
+import { sgvReading } from '../../../classes/sgvReading'
 
 const utilStub = {
   fetchJSON: sinon.stub().returns({
@@ -15,7 +15,7 @@ const utilStub = {
   })
 }
 
-const { XdripService } = proxyquire('../../services/xdrip', {
+const { XdripService } = proxyquire('../../../services/xdrip', {
   '../utils': utilStub
 })
 

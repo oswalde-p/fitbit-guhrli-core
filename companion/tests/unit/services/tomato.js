@@ -24,7 +24,7 @@ const utilStub = {
   })
 }
 
-const { TomatoService } = proxyquire('../../services/tomato', {
+const { TomatoService } = proxyquire('../../../services/tomato', {
   '../utils': utilStub
 })
 

@@ -1,7 +1,7 @@
 import test from 'ava'
 
-import { sgvReading } from '../classes/sgvReading'
-import { ALARM_TYPES, UNITS } from '../consts'
+import { sgvReading } from '../../classes/sgvReading'
+import { ALARM_TYPES, UNITS } from '../../consts'
 
 test('sgv constructor with no alarmRules uses default', t => {
   let reading = new sgvReading(100, 1577570350680)
