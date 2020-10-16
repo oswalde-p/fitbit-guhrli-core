@@ -12,7 +12,5 @@
   ],
   "author": "j.s.pursey@gmail.com",
   "license": "ISC",
-  "dependencies": {
-    "react": "^16.13.1"
-  }
+  "dependencies": {}
 }
