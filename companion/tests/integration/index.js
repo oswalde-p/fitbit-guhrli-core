@@ -59,5 +59,9 @@ test('companion.initialize() with source: "NIGHTSCOUT" and URL returns GuhrliCom
 })
 
 test('companion.initialize() with source: "NIGHTSCOUT" and no URL throws GuhrliError', t => {
-    t.throws(() => companion.initialize({source: 'NIGHTSCOUT'}))
+    t.throws(() => companion.initialize({source: 'NIGHTSCOUT'}), companion.GuhrliError)
+})
+
+test('companion.initialize() with unknown source URL throws GuhrliError', t => {
+    t.throws(() => companion.initialize({source: 'NIGHTSCOOT'}), companion.GuhrliError)
 })

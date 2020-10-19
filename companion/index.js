@@ -1,4 +1,3 @@
-import { settingsStorage } from 'settings'
 import { peerSocket } from 'messaging'
 
 
@@ -10,21 +9,8 @@ import { XdripService } from './services/xdrip'
 import { GuhrliError } from '../common/errors'
 
 export class GuhrliCompanion {
-  constructor() {
-    // first, listen for settings updates...
-    settingsStorage.addEventListener('change', (evt) => {
-      if (evt.key == SETTINGS_EVENTS.BG_SOURCE){
-        const { selected } = JSON.parse(evt.newValue)
-        this.updateSgvService(selected[0])
-        this.initializeService()
-      } else if (evt.key == SETTINGS_EVENTS.NIGHTSCOUT_URL){
-        const { selected } = JSON.parse(settingsStorage.getItem(SETTINGS_EVENTS.BG_SOURCE))
-        this.updateSgvService(selected[0])
-        this.initializeService()
-      }
-    })
-
-    // ...and socket events
+  constructor({source, nightscoutURL}) {
+    // first, add listeners for socket events
     peerSocket.onopen = () => {
       console.log('Socket open') // eslint-disable-line no-console
       this.fetchReading()
@@ -38,34 +24,27 @@ export class GuhrliCompanion {
     this.displayUnits = null
     this.latestReading = {}
 
-    // finally, try to set the initial source
-    const res = JSON.parse(settingsStorage.getItem(SETTINGS_EVENTS.BG_SOURCE))
-    const selected = res ? res.selected : []
-    this.updateSgvService(selected[0])
+    // finally, intialize the service
+    this.updateSgvService(source, nightscoutURL)
     if (this.sgvService) this.initializeService()
 
     // try to update reading every minute
     setInterval(() => this.fetchReading(), 1000 * 60 * FETCH_FREQUENCY_MINS)
   }
 
-  updateSgvService(id) {
-    if (!id) throw new GuhrliError('No sgvServiceId set')
-    switch (id) {
+  updateSgvService(source, nightscoutURL) {
+    if (!source) throw new GuhrliError('Missing SGV source')
+    switch (source) {
       case BG_SOURCES.TOMATO:
         return this.sgvService = new TomatoService()
       case BG_SOURCES.NIGHTSCOUT: {
-        const nightscoutSetting = settingsStorage.getItem(SETTINGS_EVENTS.NIGHTSCOUT_URL)
-        if (nightscoutSetting) {
-          const { name: url } = JSON.parse(nightscoutSetting)
-          return this.sgvService = new NightscoutService(addSlash(url))
-        }
-        return console.error('Nighscout url not set') // eslint-disable-line no-console
+        if (!nightscoutURL) throw new GuhrliError('Nighscout url not set')
+        return this.sgvService = new NightscoutService(addSlash(nightscoutURL))
       }
       case BG_SOURCES.XDRIP:
         return this.sgvService = new XdripService()
       default:
-        console.error(`Unknown sgv service id: ${id}`) // eslint-disable-line no-console
-        return
+        throw new GuhrliError(`Unknown SGV source "${source}"`)
     }
   }
 
@@ -118,9 +97,9 @@ function sendError(message) {
   }
 }
 
-function initialize() {
-  // todo: add support for passing args
-  return new GuhrliCompanion()
+function initialize(data) {
+  if (!data) throw new GuhrliError('Must provide at least SGV source')
+  return new GuhrliCompanion(data) //todo: check if this function is necessary..
 }
 
 export {
