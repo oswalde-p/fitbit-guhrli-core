@@ -1,5 +1,4 @@
-import { DEFAULT_CONFIG } from 'fitbit-guhrli-core/app/consts'
-
+import { DEFAULT_CONFIG } from './consts'
 import { GuhrliError } from '../common/errors'
 
 let reading = '-'
@@ -9,6 +8,7 @@ let hasError = false
 let config = DEFAULT_CONFIG
 
 const initialize = function(peerSocket, userConfig) {
+  if (!peerSocket) throw new GuhrliError('Missing paramater "peerSocket"')
   if (userConfig) config = userConfig // todo: merge to allow partial config to be passed
   peerSocket.onmessage = (evt) => {
     // make sure it's one of our events first
@@ -53,10 +53,15 @@ const getAlarm = function() {
   return alarm
 }
 
+const getConfig = function() {
+  return config
+}
+
 export default {
   initialize,
   getAlarm,
-  getReading,
+  getConfig,
   getFormattedAge,
+  getReading,
   GuhrliError
 }
