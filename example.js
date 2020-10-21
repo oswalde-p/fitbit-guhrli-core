@@ -1,5 +1,5 @@
 import { settingsStorage } from 'settings'
-import * as guhrli from './companion'
+import { initialize, GuhrliError } from './companion'
 
 // order is defined by the Settings component
 const BG_SOURCES = {
@@ -26,11 +26,27 @@ function parseSettings() {
 const currentSettings = parseSettings()
 
 // now initialize the service
-guhrli.initialize(currentSettings)
+try {
+  initialize(currentSettings)
+} catch(err) {
+  if (err instanceof GuhrliError) {
+    console.error('Error initializing Guhrli companion') // eslint-disable-line no-console
+    console.error(err) // eslint-disable-line no-console
+  }
+  throw (err)
+}
 
 // don't forget to listen for settings updates...
 settingsStorage.addEventListener('change', (evt) => {
-  if (evt.key == KEYS.BG_SOURCE || evt.key == KEYS.NIGHTSCOUT_URL){ 
-    guhrli.initialize(parseSettings())
+  if (evt.key == KEYS.BG_SOURCE || evt.key == KEYS.NIGHTSCOUT_URL){
+    try {
+      initialize(parseSettings())
+    } catch(err) {
+      if (err instanceof GuhrliError) {
+        console.error('Error initializing Guhrli companion') // eslint-disable-line no-console
+        console.error(err) // eslint-disable-line no-console
+      }
+      throw (err)
+    }
   }
 })

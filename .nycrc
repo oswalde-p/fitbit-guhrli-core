@@ -1,7 +1,7 @@
 {
     "check-coverage": true,
     "all": true,
-    "lines": 95,
+    "lines": 70,
     "include": [
         "app/**",
         "companion/**",
