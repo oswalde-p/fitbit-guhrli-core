@@ -12,8 +12,8 @@ const initialize = function(peerSocket, userConfig) {
   if (userConfig) config = userConfig // todo: merge to allow partial config to be passed
   peerSocket.onmessage = (evt) => {
     // make sure it's one of our events first
-    if (evt.data && evt.data.type == 'guhrli') {
-      processEvent(evt.data)
+    if (evt.data && evt.data.type === 'guhrli') {
+      _processEvent(evt.data)
     }
   }
 }
@@ -32,7 +32,7 @@ const getFormattedAge = function() {
   }
 }
 
-const processEvent = function(data) {
+const _processEvent = function(data) {
   if (data.error) {
     hasError = true
     return
@@ -63,5 +63,6 @@ export default {
   getConfig,
   getFormattedAge,
   getReading,
-  GuhrliError
+  GuhrliError,
+  _processEvent
 }
