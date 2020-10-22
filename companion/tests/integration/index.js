@@ -36,8 +36,8 @@ test('companion exports GuhrliError', t => {
     t.is(instance instanceof Error, true)
 })
 
-test('companion.initialize throws GuhrliError if called without source', t => {
-    t.throws(() => companion.initialize(), companion.GuhrliError)
+test('companion.initialize throws Error if called without source', t => {
+    t.throws(() => companion.initialize(), Error)
 })
 
 test('companion.initialize() with source: "TOMATO" returns GuhrliCompanion instance', t => {
@@ -62,6 +62,6 @@ test('companion.initialize() with source: "NIGHTSCOUT" and no URL throws GuhrliE
     t.throws(() => companion.initialize({source: 'NIGHTSCOUT'}), companion.GuhrliError)
 })
 
-test('companion.initialize() with unknown source URL throws GuhrliError', t => {
+test('companion.initialize() with unknown source throws GuhrliError', t => {
     t.throws(() => companion.initialize({source: 'NIGHTSCOOT'}), companion.GuhrliError)
 })

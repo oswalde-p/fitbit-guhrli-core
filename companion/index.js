@@ -9,7 +9,7 @@ import { XdripService } from './services/xdrip'
 import { GuhrliError } from '../common/errors'
 
 export class GuhrliCompanion {
-  constructor({source, nightscoutURL}) {
+  constructor() {
     // first, add listeners for socket events
     peerSocket.onopen = () => {
       console.log('Socket open') // eslint-disable-line no-console
@@ -17,16 +17,13 @@ export class GuhrliCompanion {
     }
 
     peerSocket.onerror = function(err) {
-      console.log(`Companion ERROR: ${err.code} ${err.message}`) // eslint-disable-line no-console
+      console.error(`Companion ERROR: ${err.code} ${err.message}`) // eslint-disable-line no-console
     }
 
     this.sgvService = {}
     this.displayUnits = null
     this.latestReading = {}
 
-    // finally, intialize the service
-    this.updateSgvService(source, nightscoutURL)
-    if (this.sgvService) this.initializeService()
 
     // try to update reading every minute
     setInterval(() => this.fetchReading(), 1000 * 60 * FETCH_FREQUENCY_MINS)
@@ -63,7 +60,7 @@ export class GuhrliCompanion {
   }
 
   async fetchReading() {
-    if (!this.sgvService) return
+    if (!this.sgvService || !this.sgvService.latestReading) return
     try {
       let reading = await this.sgvService.latestReading()
       console.log(JSON.stringify(reading, null, 2)) // eslint-disable-line no-console
@@ -97,9 +94,12 @@ function sendError(message) {
   }
 }
 
-function initialize(data) {
-  if (!data) throw new GuhrliError('Must provide at least SGV source')
-  return new GuhrliCompanion(data) //todo: check if this function is necessary..
+function initialize({source, nightscoutURL}) {
+  if (!source) throw new GuhrliError('Must provide at least SGV source')
+  const instance = new GuhrliCompanion()
+  instance.updateSgvService(source, nightscoutURL)
+  if (instance.sgvService) instance.initializeService()
+  return instance //todo: check if this function is necessary..
 }
 
 export {
