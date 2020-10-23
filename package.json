@@ -9,10 +9,12 @@
   },
   "keywords": [
     "fitbit",
-    "guhrli"
+    "fitbitdev",
+    "guhrli",
+    "nightscout"
   ],
   "author": "j.s.pursey@gmail.com",
-  "license": "ISC",
+  "license": "GPL-3.0-only",
   "dependencies": {},
   "devDependencies": {
     "ava": "^2.4.0",
