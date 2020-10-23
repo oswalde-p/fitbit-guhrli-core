@@ -1,3 +1,4 @@
+# App API
 
 ### initialize(socket: MessageSocket, userConfig?: object)
 

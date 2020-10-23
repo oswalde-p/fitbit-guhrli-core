@@ -1,25 +1,25 @@
 import { settingsStorage } from 'settings'
-import { initialize, GuhrliError } from './companion'
+import { initialize, GuhrliError } from '../companion'
 
 // order is defined by the Settings component
 const BG_SOURCES = {
-    NONE: 0,
-    NIGHTSCOUT: 1,
-    TOMATO: 2,
-    XDRIP: 3
+  NONE: 0,
+  NIGHTSCOUT: 1,
+  TOMATO: 2,
+  XDRIP: 3
 }
 
 const KEYS = {
-    BG_SOURCE: 'BG_SOURCE',
-    NIGHTSCOUT_URL: 'NIGHTSCOUT_URL'
+  BG_SOURCE: 'BG_SOURCE',
+  NIGHTSCOUT_URL: 'NIGHTSCOUT_URL'
 }
 
 function parseSettings() {
-    const { selected } = JSON.parse(settingsStorage.getItem(KEYS.BG_SOURCE))
-    const source = BG_SOURCES[selected[0]]
-    const nightscoutSetting = settingsStorage.getItem(KEYS.NIGHTSCOUT_URL)
-    const { name: nightscoutURL } = JSON.parse(nightscoutSetting)
-    return { source, nightscoutURL }
+  const { selected } = JSON.parse(settingsStorage.getItem(KEYS.BG_SOURCE))
+  const source = BG_SOURCES[selected[0]]
+  const nightscoutSetting = settingsStorage.getItem(KEYS.NIGHTSCOUT_URL)
+  const { name: nightscoutURL } = JSON.parse(nightscoutSetting)
+  return { source, nightscoutURL }
 }
 
 // first, read current settings from storage

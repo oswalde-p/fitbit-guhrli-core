@@ -33,7 +33,7 @@ e.g.
     }
 ```
 
-See the full app api [here](app/README.md)
+See the full app api [here](app/README.md).
 
 ### Companion
 
@@ -46,15 +46,14 @@ See the full app api [here](app/README.md)
     })
 ```
 
-See the full companion api [here](companion/README.md)
+See the full companion api [here](companion/README.md).
 
 
 Usually you'll be reading **source** and **nightscoutURL** from the settings
 storage. If the source or URL changes, simply call `initialize()` again with the
 new values. In real life you probably want to catch errors during intialization
-as well. See the [example](example.js) for a copy/pastable template, or the
-original [guhrli project](https://github.com/oswalde-p/guhrli) for a complete
-working example.
+as well. See the [examples](examples) for copy/pastable templates for companion
+and settings components, or the original [guhrli project](https://github.com/oswalde-p/guhrli) for a complete working example.
 
 ## Available Sources
 
