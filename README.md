@@ -1,4 +1,6 @@
 # fitbit-guhrli-core
+[![nyc Coverage](https://img.shields.io/nycrc/oswalde-p/fitbit-guhrli-core?config=.nycrc&preferredThreshold=lines)](.nycrc)
+
 
 A library for fitbit devices to receive Continuous Glucose data from various
 sources. Consists of both an app and a companion component. Communication
