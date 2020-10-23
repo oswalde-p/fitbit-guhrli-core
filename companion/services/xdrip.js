@@ -1,10 +1,10 @@
 import { sgvReading } from '../classes/sgvReading'
-import { sgvServiceBase } from './sgv-service-base'
+import { SgvServiceBase } from './sgv-service-base'
 import { fetchJSON } from '../utils'
 
 const URL_BASE = 'http://127.0.0.1:17580'
 
-class XdripService extends sgvServiceBase {
+class XdripService extends SgvServiceBase {
   constructor() {
     super()
     this.config = {}

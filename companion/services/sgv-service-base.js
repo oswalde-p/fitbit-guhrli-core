@@ -1,4 +1,4 @@
-class sgvServiceBase {
+class SgvServiceBase {
   constructor() {
   }
 
@@ -11,4 +11,4 @@ class sgvServiceBase {
   }
 }
 
-export { sgvServiceBase }
+export { SgvServiceBase }

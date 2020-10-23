@@ -1,11 +1,11 @@
 import { sgvReading } from '../classes/sgvReading'
-import { sgvServiceBase } from './sgv-service-base'
+import { SgvServiceBase } from './sgv-service-base'
 import { UNITS } from '../consts'
 import { fetchJSON } from '../utils'
 
 const TOMATO_URL = 'http://127.0.0.1:11111'
 
-class TomatoService extends sgvServiceBase {
+class TomatoService extends SgvServiceBase {
   constructor() {
     super()
     this.units = ''

@@ -1,0 +1,13 @@
+{
+    "check-coverage": true,
+    "all": true,
+    "lines": 90,
+    "include": [
+        "app/**",
+        "companion/**",
+        "common/**"
+    ],
+    "exclude": [
+        "**/tests/**"
+    ]
+}

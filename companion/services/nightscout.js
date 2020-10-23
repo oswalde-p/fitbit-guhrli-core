@@ -1,10 +1,10 @@
 import { sgvReading } from '../classes/sgvReading'
-import { sgvServiceBase } from './sgv-service-base'
+import { SgvServiceBase } from './sgv-service-base'
 
 import { fetchJSON } from '../utils'
 import { UNITS } from '../consts'
 
-class NightscoutService extends sgvServiceBase {
+class NightscoutService extends SgvServiceBase {
   constructor(url) {
     super()
     if (!url) {

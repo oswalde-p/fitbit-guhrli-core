@@ -1,15 +1,15 @@
 import { peerSocket } from 'messaging'
 
 
-import { SETTINGS_EVENTS, FETCH_FREQUENCY_MINS, BG_SOURCES } from './consts'
+import { FETCH_FREQUENCY_MINS, BG_SOURCES } from './consts'
 import { addSlash } from './utils'
 import { NightscoutService } from './services/nightscout'
 import { TomatoService } from './services/tomato'
 import { XdripService } from './services/xdrip'
 import { GuhrliError } from '../common/errors'
 
-export class GuhrliCompanion {
-  constructor({source, nightscoutURL}) {
+class GuhrliCompanion {
+  constructor() {
     // first, add listeners for socket events
     peerSocket.onopen = () => {
       console.log('Socket open') // eslint-disable-line no-console
@@ -17,16 +17,13 @@ export class GuhrliCompanion {
     }
 
     peerSocket.onerror = function(err) {
-      console.log(`Companion ERROR: ${err.code} ${err.message}`) // eslint-disable-line no-console
+      console.error(`Companion ERROR: ${err.code} ${err.message}`) // eslint-disable-line no-console
     }
 
     this.sgvService = {}
     this.displayUnits = null
     this.latestReading = {}
 
-    // finally, intialize the service
-    this.updateSgvService(source, nightscoutURL)
-    if (this.sgvService) this.initializeService()
 
     // try to update reading every minute
     setInterval(() => this.fetchReading(), 1000 * 60 * FETCH_FREQUENCY_MINS)
@@ -53,35 +50,26 @@ export class GuhrliCompanion {
       const { units } = await this.sgvService.initialize()
       this.displayUnits = units
     } catch(err) {
-      if (err.message.startsWith('Fetch Error')) {
-        sendError('API error, Check URL')
-      } else {
-        console.log('Error initializing service') // eslint-disable-line no-console
-        console.log(err) // eslint-disable-line no-console
-      }
+      console.error('Error initializing service') // eslint-disable-line no-console
+      console.error(err) // eslint-disable-line no-console
     }
   }
 
   async fetchReading() {
-    if (!this.sgvService) return
+    if (!this.sgvService || !this.sgvService.latestReading) return
     try {
       let reading = await this.sgvService.latestReading()
-      console.log(JSON.stringify(reading, null, 2)) // eslint-disable-line no-console
       if (reading && (!this.latestReading || this.latestReading.time != reading.time)) {
         this.latestReading = reading
         this.sendReading()
       }
     } catch (err) {
-      if (err.message.startsWith('Fetch Error')) {
-        sendError('API error, Check URL')
-      } else {
-        console.error(err)
-      }
+      console.error(err) // eslint-disable-line no-console
     }
   }
 
   sendReading() {
-    if (peerSocket.readyState == peerSocket.OPEN) {
+    if (peerSocket.readyState === peerSocket.OPEN) {
       const data = this.latestReading.serialize(this.displayUnits)
       return peerSocket.send(data)
     }
@@ -89,20 +77,16 @@ export class GuhrliCompanion {
   }
 }
 
-
-function sendError(message) {
-  console.error(`Error: ${message}`) // eslint-disable-line no-console
-  if (peerSocket.readyState == peerSocket.OPEN) {
-    peerSocket.send({ error: message})
-  }
-}
-
-function initialize(data) {
-  if (!data) throw new GuhrliError('Must provide at least SGV source')
-  return new GuhrliCompanion(data) //todo: check if this function is necessary..
+function initialize({source, nightscoutURL} = {}) {
+  if (!source) throw new GuhrliError('Must provide at least SGV source')
+  const instance = new GuhrliCompanion()
+  instance.updateSgvService(source, nightscoutURL)
+  instance.initializeService()
+  return instance
 }
 
 export {
   initialize,
+  GuhrliCompanion,
   GuhrliError
 }

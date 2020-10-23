@@ -4,7 +4,8 @@
   "description": "Library allowing fitbit os applications to fetch and display Continuous Glucose Monitoring data from various sources.",
   "main": "index.js",
   "scripts": {
-    "test": "ava"
+    "test": "ava",
+    "coverage": "nyc ava"
   },
   "keywords": [
     "fitbit",
@@ -15,6 +16,8 @@
   "dependencies": {},
   "devDependencies": {
     "ava": "^2.4.0",
+    "eslint": "^7.11.0",
+    "nyc": "^15.1.0",
     "proxyquire": "^2.1.3",
     "sinon": "^9.2.0"
   },
