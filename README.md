@@ -1,5 +1,8 @@
 # fitbit-guhrli-core
 [![nyc Coverage](https://img.shields.io/nycrc/oswalde-p/fitbit-guhrli-core?config=.nycrc&preferredThreshold=lines)](.nycrc)
+![License from NPM](https://img.shields.io/npm/l/fitbit-guhrli-core)
+![GitHub last commit](https://img.shields.io/github/last-commit/oswalde-p/fitbit-guhrli-core)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/oswalde-p/fitbit-guhrli-core)
 
 
 A library for fitbit devices to receive Continuous Glucose data from various
