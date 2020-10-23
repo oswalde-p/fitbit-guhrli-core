@@ -1,72 +1,60 @@
-# guhrli-app
+# App API
 
-A library for fitbit **devices** to receive CGM data from various sources. Works in conjunction with the guhrli-companion and gurhli-settings libraries.
+### initialize(socket: MessageSocket, userConfig?: object)
 
-## Getting started
+Set the initial configuration and add an event handler to
+`peerSocket.onmessage`. **socket** is from Fitbit's
+[Messages API](https://dev.fitbit.com/build/reference/device-api/messaging/#variable-peersocket).
+**userConfig** is optional, currently the only available configuration is
+**staleSgvMins**, used when formatting the age for display. 
 
-First, copy the library into the `app/` directory. Then inside `app/index.js`:
+#### userConfig example
 ```js
-    import { Guhrli } from './lib/gurhli-core-app'
-    const guhrli = new Guhrli()
+    userConfig = {
+        staleSgvMins: 10
+    }
 ```
 
-## The gurhli object
 
-eg.
+### getAlarm(): string
+
+Get the most recent alarm value.
+```js
+    // Possible values:
+    [
+        'URGENT_HIGH',
+        'HIGH',
+        '', // default
+        'LOW',
+        'URGENT_LOW'
+    ]
+```
+
+Thresholds and possible alarm values depend on the source. For Nightscout and xDrip,
+thresholds are read from the source, but for Tomato defaults are used.
+
+
+### getConfig(): object
+
+Get the current configuration object. Default value:
 ```js
     {
-        reading: '186',
-        alarm: 'HIGH',
-        time: 1598111907021,
-        isStale: false,
-        formattedReading()
+        staleSgvMins: 5
     }
 ```
 
-## Alarms
+### getFormattedAge(): string
 
-guhrli.alarm can either be null (reading is in range) or have one of the following values:
-```
-    URGENT_HIGH,
-    HIGH,
-    LOW,
-    URGENT_LOW
-```
+Get a formatted version of the reading age for display. Possible formats:
+*  **(empty string)** if age is less than config.staleSgvMins
+*  **XXm** if age is less than 1 hour. eg `'20m'`
+*  **XXh** if age is greater than or equal to 1 hour. eg `'3h'`
 
-## Example usage
+### getReading(): string
 
-```js
-    function onTick(evt) {
-        ...
-        updateReading()
-        ...
-    }
+Get the most recent reading, in the users specified units. Units are set during
+source initialization.
 
-    ...
+### GuhrliError: Error
 
-    function updateReading() {
-        sgvText.text = gurhli.reading
-        timeText.style.fill = colorMap[gurhli.alarm] || colorMap.default
-        sgvAgeText.text = gurhli.formattedAge() || ''
-    }
-
-    const colorMap = {
-        default: '#007700',
-        URGENT_HIGH: '#800000',
-        HIGH: '#ff9900',
-        LOW: '#1ac6ff',
-        URGENT_LOW: '#0000bb'
-    }    
-```
-
-## Configuration
-
-You can modify the library's behaviour be creating a `guhrli.config.js` file in the **project root** directory. Currently the only thing that can be configured is STALE_SGV_AGE
-
-### Example guhrli.config.js
-
-```js
-    export const config = {
-    'STALE_SGV_AGE': 5
-    }
-```
+Custom error class for all errors thrown by the library.
