@@ -1,8 +1,8 @@
 # fitbit-guhrli-core
 
-A library for fitbit devices to receive CGM data from various sources. Consists
-of both an app and a companion component. Communication between components is
-done via Fitbit's [messaging API](https://dev.fitbit.com/build/guides/communications/messaging/)
+A library for fitbit devices to receive Continuous Glucose data from various
+sources. Consists of both an app and a companion component. Communication
+between components is done via Fitbit's [messaging API](https://dev.fitbit.com/build/guides/communications/messaging/)
 
 ## Usage
 
@@ -56,12 +56,10 @@ as well. See the [example](example.js) for a copy/pastable template, or the
 original [guhrli project](https://github.com/oswalde-p/guhrli) for a complete
 working example.
 
-## Alarms
+## Available Sources
 
-guhrli.alarm can either be null (reading is in range) or have one of the following values:
-```
-    URGENT_HIGH,
-    HIGH,
-    LOW,
-    URGENT_LOW
-```
+Three sources for CGM data are currently supported:
+* [Nightscout](https://nightscout.github.io)
+* [xDrip+](https://github.com/NightscoutFoundation/xDrip)
+* [Tomato](http://tomato.cool)
+
