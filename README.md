@@ -1,8 +1,8 @@
 # fitbit-guhrli-core
+![npm](https://img.shields.io/npm/v/fitbit-guhrli-core?color=green)
 [![nyc Coverage](https://img.shields.io/nycrc/oswalde-p/fitbit-guhrli-core?config=.nycrc&preferredThreshold=lines)](.nycrc)
 ![License from NPM](https://img.shields.io/npm/l/fitbit-guhrli-core)
 ![GitHub last commit](https://img.shields.io/github/last-commit/oswalde-p/fitbit-guhrli-core)
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/oswalde-p/fitbit-guhrli-core)
 
 
 A library for fitbit devices to receive Continuous Glucose data from various
@@ -11,7 +11,7 @@ between components is done via Fitbit's [messaging API](https://dev.fitbit.com/b
 
 ## Usage
 
-Install from npm:
+Install via npm:
 ```bash
     npm install fitbit-guhrli-core
 ```
@@ -38,7 +38,7 @@ e.g.
     }
 ```
 
-See the full app api [here](app/README.md).
+See the full app api [here](https://github.com/oswalde-p/fitbit-guhrli-core/tree/master/app/README.md).
 
 ### Companion
 
@@ -51,13 +51,13 @@ See the full app api [here](app/README.md).
     })
 ```
 
-See the full companion api [here](companion/README.md).
+See the full companion api [here](https://github.com/oswalde-p/fitbit-guhrli-core/tree/master/companion/README.md).
 
 
 Usually you'll be reading **source** and **nightscoutURL** from the settings
 storage. If the source or URL changes, simply call `initialize()` again with the
 new values. In real life you probably want to catch errors during intialization
-as well. See the [examples](examples) for copy/pastable templates for companion
+as well. See the [examples](https://github.com/oswalde-p/fitbit-guhrli-core/tree/master/examples) for copy/pastable templates for companion
 and settings components, or the original [guhrli project](https://github.com/oswalde-p/guhrli) for a complete working example.
 
 ## Available Sources
