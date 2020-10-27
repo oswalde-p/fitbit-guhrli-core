@@ -1,7 +1,15 @@
 {
   "name": "fitbit-guhrli-core",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Library allowing fitbit os applications to fetch and display Continuous Glucose Monitoring data from various sources.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oswalde-p/fitbit-guhrli-core.git"
+  },
+  "homepage": "https://github.com/oswalde-p/fitbit-guhrli-core",
+  "bugs": {
+    "url": "https://github.com/oswalde-p/fitbit-guhrli-core/issues"
+  },
   "main": "index.js",
   "scripts": {
     "test": "ava",
@@ -11,6 +19,7 @@
     "fitbit",
     "fitbitdev",
     "guhrli",
+    "diabetes",
     "nightscout"
   ],
   "author": "j.s.pursey@gmail.com",
