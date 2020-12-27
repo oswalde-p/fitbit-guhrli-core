@@ -3,25 +3,27 @@ import * as sinon from 'sinon'
 import proxyquire from 'proxyquire'
 
 const utilStub = {
-  fetchJSON: sinon.stub().returns({
-    status: [
-      {
-        now: 1577570350680
-      }
-    ],
-    bgs: [
-      {
-        device: 'miaomiao',
-        datetime: 1579995390265,
-        sgv: 90,
-        type: 'sgv',
-        battery: 10,
-        delta: 0,
-        units_hint: 'mgdl'
-      }
-    ],
-    cals: []
-  })
+  fetchJSON: sinon.stub().returns(new Promise(resolve =>
+    resolve({
+      status: [
+        {
+          now: 1577570350680
+        }
+      ],
+      bgs: [
+        {
+          device: 'miaomiao',
+          datetime: 1579995390265,
+          sgv: 90,
+          type: 'sgv',
+          battery: 10,
+          delta: 0,
+          units_hint: 'mgdl'
+        }
+      ],
+      cals: []
+    })
+  ))
 }
 
 const { TomatoService } = proxyquire('../../../services/tomato', {

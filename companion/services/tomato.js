@@ -11,7 +11,7 @@ class TomatoService extends SgvServiceBase {
     this.units = ''
   }
   async initialize() {
-    const res = fetchJSON(TOMATO_URL)
+    const res = await fetchJSON(TOMATO_URL)
     const { bgs } = res
     const lastReading = bgs[0]
     if (lastReading.units_hint) this.units = unitsMap[lastReading.units_hint]
@@ -21,7 +21,7 @@ class TomatoService extends SgvServiceBase {
 
   async latestReading() {
     console.log('fetching reading from tomato server') // eslint-disable-line no-console
-    const res = fetchJSON(TOMATO_URL)
+    const res = await fetchJSON(TOMATO_URL)
     const { bgs } = res
     const lastReading = bgs[0]
     if (!lastReading) return {}
