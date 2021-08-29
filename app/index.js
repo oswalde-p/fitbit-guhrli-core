@@ -7,7 +7,6 @@ let alarm = ''
 let direction = undefined
 let hasError = false
 let config = DEFAULT_CONFIG
-console.log('this is the test')
 
 const initialize = function(peerSocket, userConfig) {
   if (!peerSocket) throw new GuhrliError('Missing paramater "peerSocket"')
