@@ -1,6 +1,6 @@
 {
   "name": "fitbit-guhrli-core",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Library allowing fitbit os applications to fetch and display Continuous Glucose Monitoring data from various sources.",
   "repository": {
     "type": "git",

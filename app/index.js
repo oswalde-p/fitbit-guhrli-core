@@ -1,9 +1,10 @@
-import { DEFAULT_CONFIG } from './consts'
+import { DEFAULT_CONFIG, DIRECTION } from './consts'
 import { GuhrliError } from '../common/errors'
 
 let reading = '-'
 let time = null
 let alarm = ''
+let direction = undefined
 let hasError = false
 let config = DEFAULT_CONFIG
 
@@ -42,6 +43,7 @@ const _processEvent = function(data) {
     reading = data.reading
     time = new Date(data.time)
     alarm = data.alarm
+    direction = data.direction
   }
 }
 
@@ -57,12 +59,18 @@ const getConfig = function() {
   return config
 }
 
+const getDirection = function() {
+  return direction
+}
+
 export default {
   initialize,
   getAlarm,
   getConfig,
+  getDirection,
   getFormattedAge,
   getReading,
   GuhrliError,
-  _processEvent
+  _processEvent,
+  DIRECTION
 }

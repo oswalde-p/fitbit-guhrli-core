@@ -22,9 +22,9 @@ class XdripService extends SgvServiceBase {
     console.log('Fetching reading from xDrip')
     const results =  await fetchJSON(`${URL_BASE}/sgv.json`)
     if (results.length == 0) return {}
-    const { sgv, date } = results[0]
+    const { sgv, date, direction } = results[0]
     console.log(sgv)
-    return new sgvReading(sgv, date, this.config.alarms)
+    return new sgvReading(sgv, date, this.config.alarms, direction)
   }
 
 }

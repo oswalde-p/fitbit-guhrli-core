@@ -26,8 +26,8 @@ class NightscoutService extends SgvServiceBase {
   async latestReading() {
     const results =  await fetchJSON(`${this.url}api/v1/entries?count=1`)
     if (results.length == 0) return {}
-    const { sgv, date } = results[0]
-    return new sgvReading(sgv, date, this.config.alarms)
+    const { sgv, date, direction } = results[0]
+    return new sgvReading(sgv, date, this.config.alarms, direction)
   }
 }
 
